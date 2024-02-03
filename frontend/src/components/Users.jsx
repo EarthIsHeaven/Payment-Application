@@ -32,7 +32,7 @@ export const Users = () => {
                     setFilter(e.target.value)
                 }} className="p-2 rounded-md border w-full" placeholder="Search . . ."></input>
             </div>
-            <div className="bg-white mx-10 rounded-xl p-11 grid grid-cols-4 gap-2 text-center my-10">
+            <div className="bg-white mx-10 rounded-xl p-11 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 text-center my-10">
                 { users.map(user => <User name={name} balance={balance} id={id} user={user}/>) }
             </div>
         </div>
