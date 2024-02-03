@@ -76,19 +76,24 @@ userRouter.post('/signin', async (req, res) => {
     const password = req.body.password;
 
     const checkUsername = await User.findOne({username: username});
-    const checkPassword = await User.findOne({password: password});
-    const accountBalance = await Account.findOne({userId: checkUsername._id});
 
-    if(checkUsername !== null && checkPassword !== null){
-        var token = jwt.sign({ username: username }, JWT_SECRET);
-        res.json({
-            token: token,
-            id: checkUsername._id,
-            balance: accountBalance.balance,
-            firstName: checkUsername.firstName
-        });
+    if(checkUsername !== null) {
+        const checkPassword = await User.findOne({password: password});
+        const accountBalance = await Account.findOne({userId: checkUsername._id});
+
+        if(checkPassword !== null) {
+            var token = jwt.sign({ username: username }, JWT_SECRET);
+            res.json({
+                token: token,
+                id: checkUsername._id,
+                balance: accountBalance.balance,
+                firstName: checkUsername.firstName
+            });
+        } else {
+            res.json({message: "Username or password not valid"});
+        }
     } else {
-    res.json({message: "Username or password not valid"});
+        res.json({message: "User not found!"});
     }
 })
 
