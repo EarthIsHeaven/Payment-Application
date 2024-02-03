@@ -93,7 +93,7 @@ userRouter.post('/signin', async (req, res) => {
             res.json({message: "Username or password not valid"});
         }
     } else {
-        res.json({message: "User not found!"});
+        res.json({message: "Username or password not valid"});
     }
 })
 
