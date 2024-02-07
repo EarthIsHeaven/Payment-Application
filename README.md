@@ -42,6 +42,4 @@ Securely sign in to your account using authentication mechanisms.
 Update Username and Password: 
 Customize your account details by updating your username and password. 
 
-This repository showcases the implementation of a robust full-stack payment application, providing a hands-on example of modern web development practices.
-
- 
+This repository showcases the implementation of a robust full-stack payment application, providing a hands-on example of modern web development practices
