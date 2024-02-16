@@ -9,18 +9,18 @@ export const Balance = () => {
     const navigate = useNavigate();
 
     useEffect( () => {
-        const headers = {
-            "authorization": `Bearer ${localStorage.getItem("token")}`
-        }
 
         axios.get("http://localhost:3000/api/v1/account/balance", {
             params: {
                 userId: location.state.id
             },
-            headers: headers
+            headers: {
+                Authorization: localStorage.getItem("token")
+            }
         }).then(response => {
             setBalance(response.data.balance);
-          })
+        })
+
     }, [])
 
     return (

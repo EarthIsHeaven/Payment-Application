@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -13,6 +13,12 @@ export default function SendMoney(){
     const id = location.state.id;
     const balance = location.state.balance;
     const name = location.state.name;
+
+    useEffect(() => {
+        if(!localStorage.getItem("token")) {
+            navigate("/signup");
+        }
+    })
 
 
     return (

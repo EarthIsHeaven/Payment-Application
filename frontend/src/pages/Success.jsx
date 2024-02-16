@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import logo from "../assets/successLogo.png";
 
 export default function Success(){
@@ -10,6 +11,12 @@ export default function Success(){
     const id = location.state.id;
     const balance = location.state.balance;
     const name = location.state.name;
+
+    useEffect(() => {
+        if(!localStorage.getItem("token")) {
+            navigate("/signup");
+        }
+    })
 
     return (
         <div className="bg-gray-500 flex justify-center h-screen items-center">
