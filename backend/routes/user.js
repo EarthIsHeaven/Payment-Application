@@ -162,4 +162,8 @@ userRouter.get("/bulk", async (req, res) => {
     })
 })
 
+userRouter.get("/verify-token", [authMiddleware], (req, res) => {
+    res.status(200).json({});
+})
+
 module.exports = userRouter;

@@ -2,6 +2,7 @@ const express = require("express");
 const { Account } = require("../db/db");
 const authMiddleware = require("../middleware/middleware");
 const { default: mongoose } = require("mongoose");
+const zod = require("zod");
 
 const accountRouter = express.Router();
 
@@ -17,7 +18,21 @@ accountRouter.get('/balance', authMiddleware ,async (req, res)=>{
     }
 })
 
+const moneyBody = zod.object({
+    amount: zod.string().min(1)
+})
+
 accountRouter.post("/transfer", authMiddleware, async (req, res) => {
+
+    const response = moneyBody.safeParse({ amount: req.body.amount });
+
+    const success = response.success;
+    if (!success) {
+        return res.status(411).json({
+            message: "Incorrect inputs"
+        })
+    }
+
     const session = await mongoose.startSession();
 
     session.startTransaction();
