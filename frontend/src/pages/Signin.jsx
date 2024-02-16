@@ -25,16 +25,30 @@ export default function Signin(){
                     setPassword(e.target.value);
                 }} label={"Password "}/>
                 <Button onPress={async () => {
-                    const response = await axios({
-                        method: 'post',
-                        url: 'http://localhost:3000/api/v1/user/signin',
-                        data: {
-                            password: password,
-                            username: username
+
+                    try {
+                            const response = await axios({
+                                method: 'post',
+                                url: 'http://localhost:3000/api/v1/user/signin',
+                                data: {
+                                    password: password,
+                                    username: username
+                                }
+                            })
+                            if(response.data.message == 'Username or password not valid'){
+                                alert(response.data.message);
+                            } else {
+                                localStorage.setItem("token", response?.data?.token);
+                                // console.log(token);
+                                if(localStorage.getItem("token")) {
+                                    navigate("/dashboard?id=" + response.data.id + "&name=" + response.data.firstName + "&balance=" + response.data.balance);
+                                }
+                            }
+                        
+                        } catch (err){
+                            alert(err?.response?.data?.message);
                         }
-                    })
-                    localStorage.setItem("token", response.data.token);
-                    navigate("/dashboard?id=" + response.data.id + "&name=" + response.data.firstName + "&balance=" + response.data.balance);
+
                 }} label={"Sign In"}/>
                 <ButtonWarning label={"Don't have an account?"} buttonText={"Sign Up"} to={"/signup"}/>
             </div>

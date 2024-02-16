@@ -33,18 +33,27 @@ export default function Signup(){
                     setPassword(e.target.value);
                 }} label={"Password "} placeholder={"76543754"}/>
                 <Button onPress={async () => {
-                    const response = await axios({
-                        method: 'post',
-                        url: 'http://localhost:3000/api/v1/user/signup',
-                        data: {
-                            firstName: firstName,
-                            lastName: lastName,
-                            username: username,
-                            password: password
+
+                    try {
+                        const response = await axios({
+                            method: 'post',
+                            url: 'http://localhost:3000/api/v1/user/signup',
+                            data: {
+                                firstName: firstName,
+                                lastName: lastName,
+                                username: username,
+                                password: password
+                            }
+                        })
+                        localStorage.setItem("token", response.data.token);
+                        // console.log(token);
+                        if(localStorage.getItem("token")) {
+                            navigate("/dashboard?id=" + response.data.id + "&name=" + response.data.firstName + "&balance=" + response.data.balance);
                         }
-                    })
-                    localStorage.setItem("token", response.data.token);
-                    navigate("/dashboard?id=" + response.data.id + "&name=" + response.data.firstName + "&balance=" + response.data.balance);
+                    } catch (err){
+                        alert(err?.response?.data?.message)
+                    }
+                    
                 }} 
                 label={"Sign Up"}/>
                 <ButtonWarning label={"Already have an account?"} buttonText={"Sign in"} to={"/"}/>
