@@ -5,7 +5,7 @@ import Heading from "../components/Heading";
 import InputBox from "../components/InputBox";
 import SubHeading from "../components/SubHeading";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Signin(){
     const [password, setPassword] = useState("");
@@ -41,7 +41,7 @@ export default function Signin(){
                                 localStorage.setItem("token", response?.data?.token);
                                 // console.log(token);
                                 if(localStorage.getItem("token")) {
-                                    navigate("/dashboard?id=" + response.data.id + "&name=" + response.data.firstName + "&balance=" + response.data.balance);
+                                    navigate("/dashboard",{state: {id: response.data.id,  balance: response.data.balance, firstName: response.data.firstName}});
                                 }
                             }
                         

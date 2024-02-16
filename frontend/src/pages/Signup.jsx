@@ -48,7 +48,7 @@ export default function Signup(){
                         localStorage.setItem("token", response.data.token);
                         // console.log(token);
                         if(localStorage.getItem("token")) {
-                            navigate("/dashboard?id=" + response.data.id + "&name=" + response.data.firstName + "&balance=" + response.data.balance);
+                            navigate("/dashboard", {state: {id: response.data.id, firstName: response.data.firstName, balance: response.data.balance}});
                         }
                     } catch (err){
                         alert(err?.response?.data?.message)

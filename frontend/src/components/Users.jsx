@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Button from "./Button";
-import { useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export const Users = () => {
     const [users, setUsers] = useState([]);
     const [filter, setFilter] = useState("");
-    const [searchParams] = useSearchParams();
-    const id = searchParams.get("id");
-    const balance = searchParams.get("balance");
-    const name = searchParams.get("name");
+    
+    const location = useLocation();
+
+    const id = location.state.id;
+    const balance = location.state.balance
+    const name = location.state.firstName;
 
     //Add debouncing in real world
     useEffect(() => {
@@ -49,7 +50,7 @@ function User({user, id, balance, name}) {
                     <div className="rounded-full h-12 w-12 text-white bg-blue-900 flex justify-center mt-1 mr-2">
                         {/* Center code */}
                         <div className="flex flex-col justify-center h-full text-xl"> 
-                            {user.firstName[0].toUpperCase()}
+                            {user.firstName.charAt(0).toUpperCase()}
                         </div>
                     </div>
                 </div>
@@ -62,7 +63,7 @@ function User({user, id, balance, name}) {
             <div className="mt-2">
                 <button 
                     onClick={(e) => {
-                        navigate("/sendMoney?toId=" + user._id + "&toName=" + user.firstName + "&id=" + id +"&balance=" + balance +"&name=" + name);
+                        navigate("/sendMoney", {state:{toId: user._id, toName: user.firstName, id: id, balance: balance, name: name}});
                     }} 
                     type="button" 
                     className=" mb-2 text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">

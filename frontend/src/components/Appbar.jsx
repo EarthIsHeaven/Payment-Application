@@ -1,8 +1,9 @@
-import { useSearchParams } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 export default function Appbar(){
-    const [searchParams] = useSearchParams();
-    const name = searchParams.get("name");
+    const location = useLocation();
+
+    const firstName = location.state.firstName;
 
     return(
         <div className="flex justify-between shadow h-14">
@@ -17,12 +18,12 @@ export default function Appbar(){
             
             <div className="flex">
                 <div className="flex flex-col justify-center mr-2 text-xl font-bold text-green-900"> 
-                    Hello, {name.charAt(0).toUpperCase() + name.slice(1)} 
+                    Hello, {firstName.charAt(0).toUpperCase() + firstName.slice(1)} 
                 </div>
                 <div className="rounded-full h-12 w-12 text-white bg-blue-900 flex justify-center mt-1 mr-2">
                      {/* Center code */}
                     <div className="flex flex-col justify-center h-full text-xl"> 
-                        {name[0].toUpperCase()}
+                        {firstName[0].toUpperCase()}
                     </div>
                 </div>
             </div>

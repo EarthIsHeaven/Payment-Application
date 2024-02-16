@@ -1,15 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import logo from "../assets/successLogo.png";
 
 export default function Success(){
     const navigate = useNavigate();
 
-    const [searchParams] = useSearchParams();
-    const toId = searchParams.get("toId");
-    const name = searchParams.get("name");
-    const id = searchParams.get("id");
-    const balance = searchParams.get("balance");
+    const location = useLocation();
+    const toId = location.state.toId;
+    const id = location.state.id;
+    const balance = location.state.balance;
+    const name = location.state.name;
 
     return (
         <div className="bg-gray-500 flex justify-center h-screen items-center">
@@ -25,7 +25,7 @@ export default function Success(){
                 </div>
                 <div>
                     <button onClick={() => {
-                        navigate("/dashboard?id=" + id + "&name=" + name +"&balance=" + balance);
+                        navigate("/dashboard", {state: {id: id, firstName: name, balance: balance}});
                         }} 
                         type="button" 
                         className="mb-2 text-white bg-green-700 hover:bg-green-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">

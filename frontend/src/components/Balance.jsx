@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import axios from "axios";
 
 export const Balance = () => {
-    const [searchParams] = useSearchParams();
-    // const balance = searchParams.get("balance");
-    const id = searchParams.get("id");
+    const location = useLocation();
     const [balance, setBalance] = useState("")
 
     const navigate = useNavigate();
 
     useEffect( () => {
+        const headers = {
+            "authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+
         axios.get("http://localhost:3000/api/v1/account/balance", {
             params: {
-                userId: id
-            }
+                userId: location.state.id
+            },
+            headers: headers
         }).then(response => {
             setBalance(response.data.balance);
           })

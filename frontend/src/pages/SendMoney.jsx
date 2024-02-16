@@ -1,19 +1,19 @@
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom"
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function SendMoney(){
     const [amount, setAmount] = useState(0);
 
-    const [searchParams] = useSearchParams();
-    const toId = searchParams.get("toId");
-    const toName = searchParams.get("toName");
-    const id = searchParams.get("id");
-    const balance = searchParams.get("balance");
-    const name = searchParams.get("name");
-
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const toId = location.state.toId;
+    const toName = location.state.toName;
+    const id = location.state.id;
+    const balance = location.state.balance;
+    const name = location.state.name;
+
 
     return (
         <div className="flex bg-slate-200 h-screen items-center text-center justify-center">
@@ -57,7 +57,7 @@ export default function SendMoney(){
                             Authorization: localStorage.getItem("token")
                         }
                     })
-                    navigate("/success?toId=" + toId + "&toName=" + toName + "&id=" + id +"&balance=" + balance + "&name=" + name);
+                    navigate("/success", {state: {toId: toId, toName: toName, id: id, balance: balance, name: name}});
                 }} type="button" className="w-full mb-2 text-white bg-green-500 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
                     Transfer
                 </button>
