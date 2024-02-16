@@ -14,11 +14,17 @@ export default function SendMoney(){
     const balance = location.state.balance;
     const name = location.state.name;
 
-    useEffect(() => {
-        if(!localStorage.getItem("token")) {
-            navigate("/signup");
-        }
-    })
+    useEffect( () => {
+
+        axios.get("http://localhost:3000/api/v1/user/verify-token", {
+            headers: {
+                'Authorization': `${localStorage.getItem("token")}`
+            }
+        }).catch(e => {
+            navigate('/');
+        })
+
+    }, [])
 
 
     return (
@@ -48,22 +54,28 @@ export default function SendMoney(){
                     onChange={e => {
                         setAmount(e.target.value);
                     }}
+                    type="number"
                     className="border rounded-md p-2" 
                     placeholder="Enter amount">
                     </input>
                 </div>
                 <div>
-                <button onClick={() => {
-                    axios.post("http://localhost:3000/api/v1/account/transfer", {
-                        to: toId,
-                        amount: amount,
-                        userId: id
-                    }, {
-                        headers: {
-                            Authorization: localStorage.getItem("token")
-                        }
-                    })
-                    navigate("/success", {state: {toId: toId, toName: toName, id: id, balance: balance, name: name}});
+                <button onClick={async () => {
+                    try {
+                        await axios.post("http://localhost:3000/api/v1/account/transfer", {
+                            to: toId,
+                            amount: amount,
+                            userId: id
+                        }, {
+                            headers: {
+                                Authorization: localStorage.getItem("token")
+                            }
+                        })
+                        navigate("/success", {state: {toId: toId, toName: toName, id: id, balance: balance, name: name}});
+                    }catch(e) {
+                        console.log(e);
+                        alert(e?.response?.data?.message)
+                    }
                 }} type="button" className="w-full mb-2 text-white bg-green-500 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
                     Transfer
                 </button>

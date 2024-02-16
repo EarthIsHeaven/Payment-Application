@@ -2,21 +2,27 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import logo from "../assets/successLogo.png";
+import axios from 'axios';
 
 export default function Success(){
     const navigate = useNavigate();
 
     const location = useLocation();
-    const toId = location.state.toId;
     const id = location.state.id;
     const balance = location.state.balance;
     const name = location.state.name;
 
-    useEffect(() => {
-        if(!localStorage.getItem("token")) {
-            navigate("/signup");
-        }
-    })
+    useEffect( () => {
+
+        axios.get("http://localhost:3000/api/v1/user/verify-token", {
+            headers: {
+                'Authorization': `${localStorage.getItem("token")}`
+            }
+        }).catch(e => {
+            navigate('/');
+        })
+
+    }, [])
 
     return (
         <div className="bg-gray-500 flex justify-center h-screen items-center">
