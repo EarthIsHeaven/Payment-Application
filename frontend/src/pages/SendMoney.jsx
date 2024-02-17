@@ -73,7 +73,6 @@ export default function SendMoney(){
                         })
                         navigate("/success", {state: {toId: toId, toName: toName, id: id, balance: balance, name: name}});
                     }catch(e) {
-                        console.log(e);
                         alert(e?.response?.data?.message)
                     }
                 }} type="button" className="w-full mb-2 text-white bg-green-500 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">

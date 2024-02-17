@@ -34,7 +34,7 @@ export const Users = () => {
                 }} className="p-2 rounded-md border w-full" placeholder="Search . . ."></input>
             </div>
             <div className="bg-white mx-10 rounded-xl p-11 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 text-center my-10">
-                { users.map(user => <User name={name} balance={balance} id={id} user={user}/>) }
+                { users.map(user => <User name={name} balance={balance} id={id} user={user} key={user._id}/>) }
             </div>
         </div>
     )
@@ -44,7 +44,7 @@ function User({user, id, balance, name}) {
     const navigate = useNavigate();
 
     return (
-        <div className="flex flex-col">
+        <div key={user._id} className="flex flex-col">
             <div className="flex flex-col">
                 <div className="flex justify-center">
                     <div className="rounded-full h-12 w-12 text-white bg-blue-900 flex justify-center mt-1 mr-2">

@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom"
 export default function Appbar(){
     const location = useLocation();
 
-    const firstName = location?.state?.firstName;
+    const firstName = location.state.firstName;
 
     return(
         <div className="flex justify-between shadow h-14">
